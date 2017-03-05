@@ -40,7 +40,7 @@ for it=1:MAXITER
     
     %%% Gibbs sampling for theta
     for c=1:K
-        m = sum(x(find(h==c),:))*sigma0^2/(sigma^2 + N(c)*sigma0^2);
+        m = sum(x(h==c,:))*sigma0^2/(sigma^2 + N(c)*sigma0^2);
         v = sigma^2*sigma0^2/(sigma^2 + N(c)*sigma0^2)*eye(d);
         s = sqrt(v);
         theta(c,:) = m + randn(1,d)*s;

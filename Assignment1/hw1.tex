@@ -82,21 +82,21 @@ E(\hh,\vv) = -\left(\sum_{i} a_iv_i\right) - \left(\sum_j b_jh_j\right) - \sum_{
 Organize the terms of the negative energy into those that depend on $h_k$ and those that do not
 \BEAN
 -E(\hh,\vv) &=& f(h_k,\vv) + g(\hh_{[-k]},\vv)  \label{eq:Efg} \\
-f(h_k,\vv) &=& ... \label{eq:Ef}\\
-g(\hh_{[-k]},\vv) &=& ...  \label{eq:Eg}
+f(h_k,\vv) &=& \sum_{k} b_kh_k + \sum_{i} v_i \theta_{i,k} h_k \label{eq:Ef}\\
+g(\hh_{[-k]},\vv) &=& \sum_{i} a_iv_i + \sum_{j\neq k} b_jh_j + \sum_{i,j\neq k} v_i \theta_{i,j}h_j \label{eq:Eg}
 \EEAN
 Using Equations~\ref{eq:prbm} and \ref{eq:Efg}, express $p(\hh,\vv)$ using $f$ and $g$. You can leave denominator as $Z$.
 \BEQ
-p(\hh,\vv) = ...
+p(\hh,\vv) = \frac{\myexp{f(h_k,\vv) + g(h_{[-k]},\vv)}}{Z}
 \label{eq:fgZ}
 \EEQ
 Use Bayes' rule, Equation~\ref{eq:bayes}, to express $p(h_k|\vv)$ in terms of $p(h_k,\vv)$ and $p(\vv)$
 \BEQ
-p(h_k | \vv) = ... \label{eq:conditional}
+p(h_k | \vv) = \frac{p(\hh_{k},\vv)}{p(\vv)} \label{eq:conditional}
 \EEQ
 Express $p(h_k,\vv)$ using Equations~\ref{eq:split},\ref{eq:marg}. Then use Equation~\ref{eq:fgZ} and ~\ref{eq:distsimple}
 \BEQ
-p(h_k,\vv) = ... \label{eq:joint}
+p(h_k,\vv) = \sum_h_{[-k]} p(\hh_k,\hh_{[-k]},\vv) \label{eq:joint}
 \EEQ
 Express $p(\vv)$ by marginalizing out $\hh$ of $p(\hh,\vv)$,  then expand $p(\hh,\vv)$  using Equation~\ref{eq:fgZ}
 \[

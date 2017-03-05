@@ -1,0 +1,10 @@
+nv = 3;
+nh = 2;
+n = 100;
+Theta = [ -10 10; -10 -10; 10 -10];
+bb = [2;2];
+aa = [-5;+5;-5];
+hidden = rand(2,n)>0.5;
+visible = sample(Theta,aa,hidden);
+newhidden = sample(Theta',bb,visible);
+err = (sum(sum(newhidden ~= hidden))/prod(size(hidden)));
