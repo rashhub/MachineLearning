@@ -1,19 +1,19 @@
-img = loadMNISTImages('train-images-idx3-ubyte');
-lab = loadMNISTLabels('train-labels-idx1-ubyte');
+img = loadMNISTImages('train-images.idx3-ubyte');
+lab = loadMNISTLabels('train-labels.idx1-ubyte');
 
 nv = size(img,1);
 nh = 100;
 n = size(img,2);
 
 % step size
-eta = 0.1;
+eta = 0.05;
 % momentum
 mom = 0.95;
 % learned parameters
 lTheta = 0.1*randn(nv,nh);laa = zeros(nv,1);lbb = zeros(nh,1);
 % update direction
 vt = zeros(size(lTheta));vaa = zeros(size(laa));vbb = zeros(size(lbb));
-minibatch = 100;
+minibatch = 128;
 last = 0;
 
 list = randperm(n);
@@ -32,7 +32,7 @@ for it=1:ITER
 idxs = list(mod(last:last+minibatch-1,n)+1);
 last = last+minibatch;
 visible = img(:,idxs);
-eta = eta*0.9999;
+eta = eta*0.999999;
 [gt,ga,gb,recon] = cdgradient(lTheta,laa,lbb,visible);
 vt = mom*vt + eta*gt;vaa = mom*vaa + eta*ga;vbb = mom*vbb + eta*gb;
 lTheta = lTheta + vt; laa = laa + vaa; lbb = lbb + vbb;
