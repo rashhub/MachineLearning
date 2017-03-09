@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2017.2.8)  4 MAR 2017 20:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2017.2.8)  8 MAR 2017 19:21
 entering extended mode
 **./hw1.tex
 (hw1.tex
@@ -660,7 +660,10 @@ LaTeX Info: Redefining \nameref on input line 3.
 \@outlinefile=\write4
 \openout4 = `hw1.out'.
 
- ABD: EveryShipout initializing macros
+
+! I can't write on file `hw1.pdf'.
+Please type another file name for output: homework1.pdf
+ABD: EveryShipout initializing macros
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -771,8 +774,8 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 452.
 ### simple group (level 1) entered at line 1061 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 17424 strings out of 493333
- 318761 string characters out of 3139198
+ 17425 strings out of 493333
+ 318776 string characters out of 3139198
  410455 words of memory out of 3000000
  20649 multiletter control sequences out of 15000+200000
  9244 words of font info for 34 fonts, out of 3000000 for 9000
@@ -795,7 +798,7 @@ s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX
 s/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/p
 ublic/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/am
 sfonts/cm/cmtt10.pfb>
-Output written on hw1.pdf (11 pages, 240630 bytes).
+Output written on homework1.pdf (11 pages, 240661 bytes).
 PDF statistics:
  176 PDF objects out of 1000 (max. 8388607)
  33 named destinations out of 1000 (max. 500000)

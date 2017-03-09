@@ -13,7 +13,7 @@ mom = 0.95;
 lTheta = 0.1*randn(nv,nh);laa = zeros(nv,1);lbb = zeros(nh,1);
 % update direction
 vt = zeros(size(lTheta));vaa = zeros(size(laa));vbb = zeros(size(lbb));
-minibatch = 128;
+minibatch = 125;
 last = 0;
 
 list = randperm(n);

@@ -21,7 +21,7 @@ mom = 0.95;
 lTheta = 0.1*randn(size(Theta));laa = zeros(size(aa));lbb = zeros(size(bb));
 % update direction
 vt = zeros(size(Theta));vaa = zeros(size(aa));vbb = zeros(size(bb));
-for it=1:10000
+for it=1:1000
 [gt,ga,gb,recon] = cdgradient(lTheta,laa,lbb,visible);
 eta = 0.999999*eta; 
 vaa = mom*vaa + eta*ga; vbb = mom*vbb + eta*gb; vt = mom*vt + eta*gt;
