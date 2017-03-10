@@ -5,8 +5,9 @@
 \setcounter{HW}{1}
 \title{COMP  790-125, HW\theHW}
 \maketitle
+{PID: 730084639}
 
-{ Deadline: 3/07/17 11:59PM EST}
+{ Deadline: 3/09/17 11:59PM EST}
 
 { Submit \texttt{hw\theHW.pdf} by e-mail,  \url{mailto:vjojic+comp790+hw\theHW@cs.unc.edu}}.
 
@@ -82,7 +83,7 @@ E(\hh,\vv) = -\left(\sum_{i} a_iv_i\right) - \left(\sum_j b_jh_j\right) - \sum_{
 Organize the terms of the negative energy into those that depend on $h_k$ and those that do not
 \BEAN
 -E(\hh,\vv) &=& f(h_k,\vv) + g(\hh_{[-k]},\vv)  \label{eq:Efg} \\
-f(h_k,\vv) &=& \sum_{k} b_kh_k + \sum_{i} v_i \theta_{i,k} h_k \label{eq:Ef}\\
+f(h_k,\vv) &=& \sum_{k} b_kh_k + \sum_{i,k} v_i \theta_{i,k} h_k \label{eq:Ef}\\
 g(\hh_{[-k]},\vv) &=& \sum_{i} a_iv_i + \sum_{j\neq k} b_jh_j + \sum_{i,j\neq k} v_i \theta_{i,j}h_j \label{eq:Eg}
 \EEAN
 Using Equations~\ref{eq:prbm} and \ref{eq:Efg}, express $p(\hh,\vv)$ using $f$ and $g$. You can leave denominator as $Z$.
@@ -120,8 +121,17 @@ Cancel out terms and expand $f(h_k)$
 p(h_k|\vv) = \frac{\myexp{f(h_k,\vv)}}{\sum_{\hh_{[k]}} \myexp{f(h_k,\vv)}}
 \]
 Use the fact that $h_k \in \{0,1\}$ and write out this conditional probability as a sigmoid
+\[
+p(h_k = 1|\vv) = \frac{p(h_k=1,\vv)}{p(h_k=0,\vv)+p(h_k=1,\vv)}
+\]
+\[
+p(h_k = 1,\vv) = \myexp{f(h_k,\vv)} = \myexp{\sum_k b_k h_k + \sum_{k} v^T \theta_k h_k } = \Pi_k \myexp{b_k + v^T \theta_k}
+\]
+\[
+p(h_k = 0,\vv) = \myexp{0} = 1
+\]
 \BEQ
-p(h_k|\vv) = ...
+p(h_k|\vv) = \Pi_k \sigmoid{b_k + v^T \theta_k}
 \label{eq:conditionalsigmoid}
 \EEQ
 where
@@ -131,7 +141,7 @@ where
 
 Use the fact that the energy has a symmetric form for visible and hidden variables and obtain conditional probability
 \[
-p(v_l | \hh) = ...
+p(v_l | \hh) = \Pi_l \sigmoid{a_l + \theta_l \hh}
 \]
 Note that $\Theta$ is not symmetric, $\theta_{i,j} \neq \theta_{j,i}$ in fact $\Theta$ will usually have less columns than rows, since the hidden variables compress information in the visible ones.
 
@@ -273,6 +283,8 @@ Using Equations~\ref{eq:Erbm},\ref{eq:Agrad},\ref{eq:Bgrad} compute partial deri
 \partd{\ALL(\Psi)}{a_i}  &=& \sum_t \frac{1}{T}\left[\sum_{\hh^t} p(\hh^t|\vv^t) \sum_{i} v^t_i + \sum_{\hh',\vv'} p(\hh',\vv') \sum_{i} v'_i\right] \\
 \partd{\ALL(\Psi)}{b_i}  &=& \sum_t \frac{1}{T}\left[\sum_{\hh^t} p(\hh^t|\vv^t) \sum_{j} h^t_j + \sum_{\hh',\vv'} p(\hh',\vv') \sum_{j}  h'_j\right]
 \EEAS
+
+\bigskip
 \newproblem{2pt} Implement contrastive divergence for gradient computation
 
 \begin{center}
@@ -287,14 +299,14 @@ Using Equations~\ref{eq:Erbm},\ref{eq:Agrad},\ref{eq:Bgrad} compute partial deri
 recon = 0;
 \ForEach{$t=1,2,\dots T$}{
 Sample $\hh^t$ from $p(\hh|\vv^t,\Theta,\aaa,\bb)$\;
-$\bg_{\theta}^0 = \bg_{\theta}^0 + \frac{1}{T}\answer$;
-$\bg_{\aaa}^0 = \bg_{\aaa}^0 + \frac{1}{T}\answer$\;
-$\bg_{\bb}^0 = \bg_{\bb}^0 + \frac{1}{T}\answer$\;
+$\bg_{\theta}^0 = \bg_{\theta}^0 + \frac{1}{T}\left\{\vv^t.* \hh^{t'}\right\}$;
+$\bg_{\aaa}^0 = \bg_{\aaa}^0 + \frac{1}{T}\vv^t$\;
+$\bg_{\bb}^0 = \bg_{\bb}^0 + \frac{1}{T}\hh^t$\;
 Sample $\vv^{t,1}$ from $p(\vv|\hh^t,\Theta,\aaa,\bb)$ \;
 Sample $\hh^{t,1}$ from $p(\hh|\vv^{t,1},\Theta,\aaa,\bb)$ \;
-$\bg_{\theta}^1 =  \bg_{\theta}^1 + \frac{1}{T}\answer$\;
-$\bg_{\aaa}^1 = \bg_{\aaa}^1 + \frac{1}{T}\answer$\;
-$\bg_{\bb}^1 = \bg_{\bb}^1 + \frac{1}{T}\answer$\;
+$\bg_{\theta}^1 =  \bg_{\theta}^1 + \frac{1}{T}\left\{\vv^{t,1}.*\hh^{t,1'}\right\}$\;
+$\bg_{\aaa}^1 = \bg_{\aaa}^1 + \frac{1}{T}\vv^{t,1}$\;
+$\bg_{\bb}^1 = \bg_{\bb}^1 + \frac{1}{T}\hh^{t,1}$\;
 recon = recon + err($\vv^t$,$\vv^{t,1}$)
 }
 $\bg = -\bg^0 + \bg^1$\;
@@ -357,15 +369,16 @@ for it=1:100
 end
 
 % step size
-eta = 0.05;
+eta = 0.055;
 % momentum
-mom = 0.95;
+mom = 0.975;
 % learned parameters
 lTheta = 0.1*randn(size(Theta));laa = zeros(size(aa));lbb = zeros(size(bb));
 % update direction
 vt = zeros(size(Theta));vaa = zeros(size(aa));vbb = zeros(size(bb));
 for it=1:10000
     [gt,ga,gb,recon] = cdgradient(lTheta,laa,lbb,visible);
+	eta = 0.999999*eta;
     vaa = mom*vaa + eta*ga; vbb = mom*vbb + eta*gb; vt = mom*vt + eta*gt;
     lTheta = lTheta + vt; laa = laa + vaa; lbb = lbb + vbb;
     if (mod(it,100) == 0)
@@ -397,14 +410,14 @@ nh = 100;
 n = size(img,2);
 
 % step size
-eta = 0.1;
+eta = 0.055;
 % momentum
-mom = 0.95;
+mom = 0.975;
 % learned parameters
 lTheta = 0.1*randn(nv,nh);laa = zeros(nv,1);lbb = zeros(nh,1);
 % update direction
 vt = zeros(size(lTheta));vaa = zeros(size(laa));vbb = zeros(size(lbb));
-minibatch = 100;
+minibatch = 10;
 last = 0;
 list = randperm(n);
 ct = 0;
@@ -421,7 +434,7 @@ for it=1:ITER
     idxs = list(mod(last:last+minibatch-1,n)+1);
     last = last+minibatch;
     visible = img(:,idxs);
-    eta = eta*0.9999;
+    eta = eta*0.99999;
     [gt,ga,gb,recon] = cdgradient(lTheta,laa,lbb,visible);
     vt = mom*vt + eta*gt;vaa = mom*vaa + eta*ga;vbb = mom*vbb + eta*gb;
     lTheta = lTheta + vt; laa = laa + vaa; lbb = lbb + vbb;

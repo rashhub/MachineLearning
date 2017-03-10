@@ -6,14 +6,14 @@ nh = 100;
 n = size(img,2);
 
 % step size
-eta = 0.05;
+eta = 0.055;
 % momentum
-mom = 0.95;
+mom = 0.975;
 % learned parameters
 lTheta = 0.1*randn(nv,nh);laa = zeros(nv,1);lbb = zeros(nh,1);
 % update direction
 vt = zeros(size(lTheta));vaa = zeros(size(laa));vbb = zeros(size(lbb));
-minibatch = 125;
+minibatch = 10;
 last = 0;
 
 list = randperm(n);
@@ -21,7 +21,7 @@ ct = 0;
 ITER = 1000;
 d = sqrt(nv);
 f = sqrt(nh);
-skip = 10;
+skip = 100;
 makemovie = 1;
 
 if makemovie
@@ -32,7 +32,9 @@ for it=1:ITER
 idxs = list(mod(last:last+minibatch-1,n)+1);
 last = last+minibatch;
 visible = img(:,idxs);
-eta = eta*0.999999;
+eta = eta*0.9999;
+mom =mom*0.999;
+
 [gt,ga,gb,recon] = cdgradient(lTheta,laa,lbb,visible);
 vt = mom*vt + eta*gt;vaa = mom*vaa + eta*ga;vbb = mom*vbb + eta*gb;
 lTheta = lTheta + vt; laa = laa + vaa; lbb = lbb + vbb;
