@@ -1,4 +1,4 @@
 # MachineLearning790
 
 
-Matlab Machine Learning Assignments
+Machine Learning Assignments using Matlab and Python.
