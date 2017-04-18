@@ -1,0 +1,1 @@
+scp -i ../../../../../Fall2016/AWS\ Hadoop/AWS/Key.pem ec2-user@ec2-52-45-204-47.compute-1.amazonaws.com:/home/ec2-user/Notebooks/hw3/hw3-solved.ipynb .
